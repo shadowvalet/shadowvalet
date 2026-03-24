@@ -755,8 +755,10 @@
     border-radius: 12px 12px 0 0;
     display: flex;
     flex-direction: column;
-    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+    min-height: 0;
+    height: 85svh;
     max-height: 85svh;
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
   }
   @keyframes slideUp {
     from { transform: translateY(100%); opacity: 0; }
@@ -794,7 +796,7 @@
   #chat-messages {
     flex: 1; overflow-y: auto; padding: 20px;
     display: flex; flex-direction: column; gap: 14px;
-    scroll-behavior: smooth; min-height: 240px; max-height: 55svh;
+    scroll-behavior: smooth; min-height: 0;
   }
   #chat-messages::-webkit-scrollbar { width: 3px; }
   #chat-messages::-webkit-scrollbar-thumb { background: #7a5e28; border-radius: 2px; }
