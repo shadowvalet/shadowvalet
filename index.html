@@ -1089,5 +1089,18 @@ Tu réponds toujours dans la langue de l'utilisateur.`;
     }
   }
 </script>
-</body>
+<script>
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', function() {
+    const keyboardHeight = window.innerHeight - window.visualViewport.height;
+    const chatModal = document.getElementById('chat-modal');
+    if (!chatModal) return;
+    if (keyboardHeight > 150) {
+      chatModal.style.height = window.visualViewport.height + 'px';
+    } else {
+      chatModal.style.height = '';
+    }
+  });
+}
+</script></body>
 </html>
