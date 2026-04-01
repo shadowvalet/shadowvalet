@@ -568,7 +568,6 @@ gtag('config', 'G-BBEYQ724X9');
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    /* Aligner en bas sur mobile, centré sur desktop */
     align-items: flex-end;
     justify-content: center;
   }
@@ -583,10 +582,8 @@ gtag('config', 'G-BBEYQ724X9');
     border-radius: 12px 12px 0 0;
     display: flex;
     flex-direction: column;
-    /* Hauteur fixe basée sur dvh — ne bouge pas avec le clavier */
     height: 88dvh;
     max-height: 88dvh;
-    /* Empêcher tout débordement */
     overflow: hidden;
     animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
   }
@@ -600,7 +597,7 @@ gtag('config', 'G-BBEYQ724X9');
     padding: 16px 20px;
     border-bottom: 1px solid rgba(201,168,76,0.1);
     display: flex; align-items: center; gap: 12px;
-    flex-shrink: 0; /* Ne rétrécit jamais */
+    flex-shrink: 0;
   }
 
   .chat-avatar {
@@ -636,7 +633,7 @@ gtag('config', 'G-BBEYQ724X9');
     padding: 20px;
     display: flex; flex-direction: column; gap: 14px;
     scroll-behavior: smooth;
-    min-height: 0; /* Crucial pour flex scroll */
+    min-height: 0;
   }
   #chat-messages::-webkit-scrollbar { width: 3px; }
   #chat-messages::-webkit-scrollbar-thumb { background: #7a5e28; border-radius: 2px; }
@@ -659,6 +656,28 @@ gtag('config', 'G-BBEYQ724X9');
   }
   .msg-bubble a { color: var(--gold-light); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.25); }
 
+  /* ══ BOUTON AMAZON DORÉ ══ */
+  .amazon-btn {
+    display: block;
+    margin-top: 12px;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #7a5e28, #c9a84c);
+    color: #050505 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    border: none !important;
+    border-radius: 2px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+  }
+  .amazon-btn:hover { opacity: 0.85; }
+
   .typing-indicator {
     display: flex; gap: 5px; align-items: center;
     padding: 12px 16px; background: #1c1c1c;
@@ -676,33 +695,29 @@ gtag('config', 'G-BBEYQ724X9');
     30% { transform: translateY(-5px); opacity: 1; }
   }
 
-  /* Zone input — CLÉE pour mobile */
   #chat-input-area {
     border-top: 1px solid rgba(201,168,76,0.08);
     padding: 14px 18px;
     display: flex; gap: 10px; align-items: flex-end;
     background: rgba(10,10,10,0.98);
-    flex-shrink: 0; /* Ne rétrécit JAMAIS */
-    /* Colle au bas du chat-box, pas au bas de l'écran */
+    flex-shrink: 0;
     position: relative;
   }
 
   #chat-input {
     flex: 1; background: transparent; border: none; outline: none;
     color: var(--white); font-family: 'Montserrat', sans-serif;
-    font-size: 0.84rem; font-weight: 300;
+    font-weight: 300;
     resize: none; max-height: 100px; line-height: 1.6;
-    /* Éviter zoom iOS sur focus */
     font-size: 16px;
   }
   #chat-input::placeholder { color: rgba(245,240,232,0.3); }
 
   #send-btn {
-    background: var(--gold); border: none; width: 36px; height: 36px;
+    background: var(--gold); border: none;
     border-radius: 50%; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; transition: all 0.2s;
-    /* Zone de tap plus grande sur mobile */
     min-width: 44px; min-height: 44px; width: 44px; height: 44px;
   }
   #send-btn:hover { background: var(--gold-light); transform: scale(1.05); }
@@ -890,8 +905,9 @@ gtag('config', 'G-BBEYQ724X9');
       <button id="close-chat" onclick="closeShadowChat()" aria-label="Fermer">✕</button>
     </div>
     <div id="chat-messages">
+      <!-- Message d'accueil statique — Shadow ne le répète pas (injecté dans l'historique) -->
       <div class="msg shadow">
-        <div class="msg-bubble">Bonjour.C'est pour qui et pour quelle occasion ?</div>
+        <div class="msg-bubble">Bonjour. C'est pour qui et pour quelle occasion ?</div>
       </div>
     </div>
     <div id="chat-input-area">
@@ -923,7 +939,6 @@ gtag('config', 'G-BBEYQ724X9');
     }
   }
 
-  // Prompt de secours si le fichier ne charge pas
   const FALLBACK_PROMPT = `Tu es Shadow Valet, un assistant personnel intelligent et discret. Ta mission : aider l'utilisateur à choisir rapidement UNE excellente idée de cadeau, activité ou expérience pour une personne réelle. Tu enlèves la charge mentale de décider.
 
 Tu guides avec un entonnoir simple — maximum 3 questions, une à la fois :
@@ -933,21 +948,30 @@ Tu guides avec un entonnoir simple — maximum 3 questions, une à la fois :
 
 Tu ne cherches pas l'idée parfaite. Tu proposes une excellente idée dès que tu as assez pour décider. Souvent 1 ou 2 questions suffisent. Tu poses rarement les 3.
 
-Tu proposes UNE seule idée principale. Tu n'utilises pas d'emojis. Ton ton : naturel, calme, confiant, humain.
+Tu proposes UNE seule idée principale. Ton ton : naturel, calme, confiant, humain.
 
 Après ta suggestion : 🔍 Voir sur Amazon.ca → https://www.amazon.ca/s?k=MOTS+CLES&tag=shadowvalet-20
 
-Tu réponds toujours dans la langue de l'utilisateur.`;
+Tu réponds toujours dans la langue de l'utilisateur.
+
+IMPORTANT : Tu ne répètes jamais le message d'ouverture. La conversation commence déjà avec "Bonjour. C'est pour qui et pour quelle occasion ?" — ta première réponse est toujours une question de suivi.`;
 
   /* ══════════════════════════════
      CHAT — LOGIQUE PRINCIPALE
   ══════════════════════════════ */
-  const chatHistory = [];
+
+  // FIX RÉPÉTITION : message d'accueil déjà injecté dans l'historique
+  // Shadow sait que la conversation a commencé et ne répète pas l'ouverture
+  const chatHistory = [
+    {
+      role: 'assistant',
+      content: 'Bonjour. C\'est pour qui et pour quelle occasion ?'
+    }
+  ];
 
   function openShadowChat() {
     const modal = document.getElementById('chat-modal');
     modal.classList.add('open');
-    // Bloquer le scroll de la page sous le modal
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
@@ -957,25 +981,21 @@ Tu réponds toujours dans la langue de l'utilisateur.`;
   function closeShadowChat() {
     const modal = document.getElementById('chat-modal');
     modal.classList.remove('open');
-    // Rétablir le scroll
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
   }
 
-  // Fermer en cliquant sur le fond
   document.getElementById('chat-modal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('chat-modal')) closeShadowChat();
   });
 
-  // Auto-resize textarea
   const chatInput = document.getElementById('chat-input');
   chatInput.addEventListener('input', () => {
     chatInput.style.height = 'auto';
     chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
   });
 
-  // Envoyer avec Enter (pas Shift+Enter)
   chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -1027,12 +1047,17 @@ Tu réponds toujours dans la langue de l'utilisateur.`;
     msgs.scrollTop = msgs.scrollHeight;
   }
 
+  // FIX BOUTON AMAZON : transforme le lien en bouton doré
   function formatText(t) {
+    t = t.replace(
+      /🔍\s*Voir sur Amazon\.ca\s*→\s*(https?:\/\/[^\s<"]+)/g,
+      (match, url) => `<a href="${url}" target="_blank" rel="noopener" class="amazon-btn">🔍 Voir sur Amazon.ca</a>`
+    );
     return t
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-      .replace(/(https?:\/\/[^\s<"]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`)
+      .replace(/(https?:\/\/(?!.*amazon)[^\s<"]+)/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`)
       .replace(/\n/g, '<br/>');
   }
 
@@ -1148,7 +1173,7 @@ Tu réponds toujours dans la langue de l'utilisateur.`;
   }
 
   /* ══════════════════════════════
-     INIT — charger le prompt au démarrage
+     INIT
   ══════════════════════════════ */
   loadPrompt();
 </script>
