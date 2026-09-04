@@ -159,7 +159,7 @@ footer p{font-size:0.6rem;letter-spacing:0.3em;color:rgba(245,240,232,0.2);text-
       <button id="close-chat" onclick="closeShadowChat()" aria-label="Fermer">✕</button>
     </div>
     <div id="chat-messages">
-      <div class="msg shadow"><div class="msg-bubble">Bonjour. C'est pour qui et pour quelle occasion ?</div></div>
+      <div class="msg shadow"><div class="msg-bubble">Bonjour. À votre service.</div></div>
     </div>
     <div id="chat-input-area">
       <textarea id="chat-input" placeholder="Écris ici…" rows="1"></textarea>
@@ -171,7 +171,7 @@ footer p{font-size:0.6rem;letter-spacing:0.3em;color:rgba(245,240,232,0.2);text-
 let SYSTEM_PROMPT='';
 async function loadPrompt(){try{const r=await fetch('/prompt-shadow.txt?v='+Date.now());if(r.ok){SYSTEM_PROMPT=await r.text()}else{SYSTEM_PROMPT=FALLBACK}}catch(e){SYSTEM_PROMPT=FALLBACK}}
 const FALLBACK=`Tu es Shadow Valet, un assistant personnel intelligent et discret. Tu aides à choisir UNE excellente idée de cadeau, activité ou expérience. Maximum 3 questions, une à la fois. Tu proposes UNE seule idée principale. Ton ton : naturel, calme, confiant. Après ta suggestion : 🔍 Voir sur Amazon.ca → https://www.amazon.ca/s?k=MOTS+CLES&tag=shadowvalet-20. Tu réponds toujours dans la langue de l'utilisateur. IMPORTANT : Ne répète jamais le message d'ouverture.`;
-const chatHistory=[{role:'assistant',content:'Bonjour. C\'est pour qui et pour quelle occasion ?'}];
+const chatHistory=[{role:'assistant',content:'Bonjour. À votre service.'}];
 function openShadowChat(){const m=document.getElementById('chat-modal');m.classList.add('open');document.body.style.overflow='hidden';document.body.style.position='fixed';document.body.style.width='100%';setTimeout(()=>document.getElementById('chat-input').focus(),400)}
 function closeShadowChat(){const m=document.getElementById('chat-modal');m.classList.remove('open');document.body.style.overflow='';document.body.style.position='';document.body.style.width=''}
 document.getElementById('chat-modal').addEventListener('click',e=>{if(e.target===document.getElementById('chat-modal'))closeShadowChat()});
